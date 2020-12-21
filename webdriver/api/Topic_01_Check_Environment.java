@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 
@@ -15,12 +16,10 @@ public class Topic_01_Check_Environment {
 
 	@BeforeClass
 	public void beforeClass() {
-		// Mở trình duyệt
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
 		// Mở app
-		driver.get("http://demo.guru99.com/v4");
+		driver.get("http://live.demoguru99.com/index.php/");
+
 	}
 
 	@Test
@@ -42,7 +41,6 @@ public class Topic_01_Check_Environment {
 	public void TC_03_LoginFormDisplayed() {
 		// Login form displayed
 		Assert.assertTrue(driver.findElement(By.xpath("//form[@name='frmLogin']")).isDisplayed());
-		;
 
 	}
 
