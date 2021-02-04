@@ -233,14 +233,14 @@ public class Topic_07_Default_Dropdown {
 		selectItemInCustomDropdown("//span[@id='number-button']", "//ul[@id='number-menu']//div", "19");
 		// Step 03: Kiểm tra item đã được chọn thành công
 		Assert.assertEquals(
-				driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(),
+				driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText().trim(),
 				"19");
 
 	}
 
-	@Test
+	//@Test
 	public void TC_05_Custom_Dropdown_List_Angular() {
-		// Step 01: Truy cap vao trang
+		// Step 01: Truy cap vao trang Error
          driver.get("https://ej2.syncfusion.com/angular/demos/?_ga=2.262049992.437420821.1575083417-524628264.1575083417#/material/drop-down-list/data-binding");
 		// Step 02: Chon Item Football
          selectItemInCustomDropdown("//ul[@id='games_options']","//ul[@id='games_options']/li","Cricket");
@@ -251,27 +251,52 @@ public class Topic_07_Default_Dropdown {
             driver.get("https://mikerodham.github.io/vue-dropdowns/");
 		// Step 02: Chon Item Second Option
             selectItemInCustomDropdown("//li[@class='dropdown-toggle']","//ul[@class='dropdown-menu']//li","Second Option");
-            
+            Assert.assertTrue(driver.findElement(By.xpath("driver[text()='Jenny Hess']")).isDisplayed());
 	}
-   
+    //@Test
+    public void TC_07_Custom_Dropdown_List_VueJS()
+    {
+    	//Step 01: Truy cap vao trang web
+    	driver.get("https://mikerodham.github.io/vue-dropdowns/");
+    	//Step 02: Select item then Verify
+    	selectItemInCustomDropdown("//li[@class='dropdown-toggle']","//ul[@class='dropdown-menu']//a","Second Option");
+    	Assert.assertEquals(driver.findElement(By.xpath("//li[@class='dropdown-toggle']")).getText().trim(), "Second Option");
+    }
+    @Test
+    public void TC_08_Custom_Dropdown_List_Editable()
+    {
+    	//Step 01: Truy cap vao trang web
+    	driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+    	//Step 02: Edit able
+    	selectItemInEditDropdown("//input[@class='search']","//div[@role='combobox']//span[@class='text']","Albania");
+    	Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Albania']")).isDisplayed());
+    	selectItemInEditDropdown("//input[@class='search']","//div[@role='combobox']//span[@class='text']","Aland Islands");
+    	Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Aland Islands']")).isDisplayed());
+    }
+    
+    
 	public void selectItemInCustomDropdown(String parentXpath, String allItemXpath, String expectText) {
-		// click vao dropdown
+		//1 click vao dropdown
 		driver.findElement(By.xpath(parentXpath)).click();
-		// chow cho cac item hien thi ra truoc khi chon
+		//sleepInSecond(1);
+		//2 chow cho cac item hien thi ra truoc khi chon
 
 		expliciWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemXpath)));
-		// Lay het tat ca item con dua vao 1 list de duyet qua
+		//3 Lay het tat ca item con dua vao 1 list de duyet qua
 		List<WebElement> allItem = driver.findElements(By.xpath(allItemXpath));
 		// Dung vong lap duyet qua tung item
 		for (WebElement item : allItem) {
-			if (item.getText().equals(expectText)) {
+			if (item.getText().trim().equals(expectText)) {
 				item.click();
 				break;
 			}
 		}
 
 	}
-
+    public void getKhoangtrang()
+    {
+    	
+    }
 	public void checkToCheckboxOradio(By by) {
 		WebElement element = driver.findElement(by);
 		if (!element.isSelected()) {
@@ -307,7 +332,29 @@ public class Topic_07_Default_Dropdown {
 		return rand.nextInt(9999);
 
 	}
-
+	public void selectItemInEditDropdown(String EditableXpath, String allItemXpath, String expectText) {
+		   //1 input vao element (textbox) đê cho nó sổ hết tất cả các item ra
+		driver.findElement(By.xpath(EditableXpath)).sendKeys(expectText);;
+		   //sleepInSecond(1);
+		   //2 chờ cho tất cả item đc load ra
+		expliciWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemXpath)));
+		
+		   //3 Lưu nó lại vào 1 list chứa những element
+		List<WebElement> allItem = driver.findElements(By.xpath(allItemXpath));
+		int allItemNumber= allItem.size();
+		
+		   //4 Duyệt qua từng element và lấy ra text
+		for (int i=0; i<allItemNumber;i++) {
+			String actualValueItem= allItem.get(i).getText().trim();
+			
+			//5 Kiểm tra nó có bằng vs cái text cần tìm hay không
+			if (actualValueItem.equals(expectText)) {
+		    //6 Nếu có thì click vào - thoát khỏi vòng lặp
+				allItem.get(i).click();
+				break;
+			}
+		}
+			}
 	@AfterClass
 	public void afterClass() {
 
