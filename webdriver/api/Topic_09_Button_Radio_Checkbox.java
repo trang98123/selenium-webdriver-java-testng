@@ -24,6 +24,7 @@ public class Topic_09_Button_Radio_Checkbox {
 	By Radio_2 = By.xpath("//label[text()='2.0 Petrol, 147kW']/preceding-sibling::input");
 
 	By summer= By.xpath("//input[@id='mat-radio-4-input']");
+	By summer_radio=By.xpath("//input[@value='Summer']");
 	@BeforeClass
 	public void beforeClass() {
 		driver = new FirefoxDriver();
@@ -95,6 +96,18 @@ public class Topic_09_Button_Radio_Checkbox {
 		clickToElementByJS(driver.findElement(summer));
 		//Step 03: Kiểm tra radio button đã đc chọn hay chưa, nếu trưa thì chọn lại
 		Assert.assertTrue(isElemenSelected(driver.findElement(summer)));
+	}
+	@Test
+	public void TC_04_Checkbox_radio_Custom()
+	{
+		//Step 01: Truy cap trang web
+				driver.get("https://material.angular.io/components/radio/examples");
+				//case 04
+				//click- Input -> Hidden -> Javascript click
+				clickToElementByJS(driver.findElement(summer_radio));
+				Assert.assertTrue(isElemenSelected(driver.findElement(summer_radio)));
+				//Verify -input ->pass
+				
 	}
 	public void ChecktocheckboxRadio(WebElement element) {
 		if (!element.isSelected()) {
