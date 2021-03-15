@@ -23,8 +23,10 @@ public class Topic_03_Data_Type {
 
 	// kiểu dữ liệu boolean (true/false)
      boolean status =true ; 
+     
 	// kiểu dữ liệu chuỗi
 	String fullname = "Hoang";
+	
 	// kiểu array (co dinh)
 	String[] addresses = { "ha noi", "Ho chi minh" };
 	
@@ -37,6 +39,9 @@ public class Topic_03_Data_Type {
 	ArrayList<String> address= new ArrayList<String>();
     address.add("Ha Noi");
     address.add("Ho Chi Minh");
+    
+    
+    // ko chứa trùng
 	Set<String> add=new HashSet<String>();
 	add.add("Ha Noi");
 }
